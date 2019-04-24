@@ -2,4 +2,4 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("<h1>YES</h1>")
+    return render(request, 'map_yandex/index.html', locals())
