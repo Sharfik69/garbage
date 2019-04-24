@@ -1,3 +1,4 @@
 from django.contrib import admin
+from garbage_map.models import Dots
 
-# Register your models here.
+admin.site.register(Dots)

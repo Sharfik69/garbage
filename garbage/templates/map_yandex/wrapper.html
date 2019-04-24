@@ -8,10 +8,17 @@
         <script type="text/javascript">
             ymaps.ready(init);    
             function init(){ 
+
                 var myMap = new ymaps.Map("map", {
                     center: [55.76, 37.64],
-                    zoom: 5
-                }); 
+                    zoom: 10
+                });
+                myMap.geoObjects
+                    
+                    .add(new ymaps.Placemark([55.790139, 37.814052], {
+                        balloonContent: 'test',
+                        iconCaption: ''
+                    }));
             }
         </script>
 

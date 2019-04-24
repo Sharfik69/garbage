@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Dots(models.Model):
-    Group_user = models.CharField(max_length = 15, default = '')
+    Subject = models.CharField(max_length = 120, default = '')
+    dot_x = models.FloatField(default = 0.0)
+    dot_y = models.FloatField(default = 0.0)
 
-    Subject = models.CharField(max_length = 120)
 
-    def __str__(self):
-        return self.Subject
+def __str__(self):
+    return self.Subject
