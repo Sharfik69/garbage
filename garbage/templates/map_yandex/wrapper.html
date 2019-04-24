@@ -2,8 +2,18 @@
 <html lang="en">
     <head>
         <title>Garbage_map</title>
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=<89182932-e0e9-4f0c-817f-32c2c6f15023>&lang=ru_RU" type="text/javascript">
+        </script>
 
-
+        <script type="text/javascript">
+            ymaps.ready(init);    
+            function init(){ 
+                var myMap = new ymaps.Map("map", {
+                    center: [55.76, 37.64],
+                    zoom: 5
+                }); 
+            }
+        </script>
 
 
     </head>
