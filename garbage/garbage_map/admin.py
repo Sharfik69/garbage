@@ -1,4 +1,4 @@
 from django.contrib import admin
-from garbage_map.models import Dots
+from garbage_map.models import Dot
 
-admin.site.register(Dots)
+admin.site.register(Dot)

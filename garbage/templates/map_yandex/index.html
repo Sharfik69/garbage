@@ -1,10 +1,29 @@
 {% extends "map_yandex/wrapper.html" %}
 
-{%block content%}
-
-    <div id="map" style="width: 600px; height: 400px"></div>
+{% block content %}
 
 
+    {% for dot in dots %}
+        <h2>{{dot.subject}} x: {{dot.dot_x}} y: {{dot.dot_y}}</h2>
+    {% endfor %}
+    <script type="text/javascript">
+        ymaps.ready(init);    
+        function init(){ 
+            var myMap = new ymaps.Map("map", {
+                center: [52.29778, 104.29639],
+                zoom: 4
+            });
+            myMap.geoObjects      
+            {% for dot in dots %}              
+                .add(new ymaps.Placemark([{{dot.dot_x}}, {{dot.dot_y}}], {
+                    balloonContent: 'test123',
+                    iconCaption: ''
+                }))
+            {% endfor %}
+            ;
+        }
+    </script>
 
     
-{%endblock%} 
+    <div id = "map" style = "width: 100%; height: 750px"></div> 
+{% endblock %} 
