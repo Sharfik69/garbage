@@ -4,7 +4,7 @@
 
 
     {% for dot in dots %}
-        <h2>{{ dot.subject }} x: {{ dot.dot_x }} y: {{ dot.dot_y }}</h2>
+        <h2>{{ dot.name }} x: {{ dot.x }} y: {{ dot.y }}</h2>
     {% endfor %}
     <script type="text/javascript">
         ymaps.ready(init);    
@@ -15,8 +15,8 @@
             });
             myMap.geoObjects      
             {% for dot in dots %}              
-                .add(new ymaps.Placemark([{{ dot.dot_x }}, {{ dot.dot_y }}], {
-                    balloonContent: '{{ dot.subject }}',
+                .add(new ymaps.Placemark([{{ dot.x }}, {{ dot.y }}], {
+                    balloonContent: '{{ dot.name }}',
                     iconCaption: ''
                 }))
             {% endfor %}

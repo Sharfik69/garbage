@@ -2,10 +2,18 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-class Dot(models.Model):
-    subject = models.CharField(max_length = 120, default = '')
-    dot_x = models.FloatField(default = 0.0)
-    dot_y = models.FloatField(default = 0.0)
+class Category(models.Model):
+    name = models.CharField(max_length = 120, default = '')
+    
+    def __unicode__(self):
+        return self.name
 
-    def __str__(self):
-        return self.subject
+class Dot(models.Model):
+    name = models.CharField(max_length = 120, default = '')
+    description = models.CharField(max_length = 120, default = '')
+    x = models.FloatField(default = 0.0)
+    y = models.FloatField(default = 0.0)
+    category = models.ManyToManyField(Category)
+    
+    def __unicode__(self):
+        return self.name
