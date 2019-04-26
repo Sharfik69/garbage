@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'garbage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': ('Garbage'),
-        'USER': ('root'),
-        'PASSWORD': ('root'),
+        'NAME': 'Garbage',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -119,6 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
