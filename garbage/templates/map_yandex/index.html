@@ -3,9 +3,6 @@
 {% block content %}
 
 
-    {% for dot in dots %}
-        <h2>{{ dot.name }} x: {{ dot.x }} y: {{ dot.y }}</h2>
-    {% endfor %}
     <script type="text/javascript">
         ymaps.ready(init);    
         function init(){ 
