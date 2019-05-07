@@ -5,6 +5,7 @@
 
     <script type="text/javascript">
         ymaps.ready(init);    
+        
         function init(){ 
             var myMap = new ymaps.Map("map", {
                 center: [52.29778, 104.29639],
@@ -16,7 +17,7 @@
                 .add(new ymaps.Placemark([{{ dot.x }}, {{ dot.y }}], {
                     balloonContentHeader: '<a href = "#">{{dot.name}}</a><br>' +
                         '<span class="description">{{dot.description}}</span>' + 
-                        '<p>Здесь принимают {{dot.category}} </p>',
+                        '<p>Здесь принимают {{ dots.category.all|join:", " }} </p>',
                     balloonContentBody: '<img src="{{dot.image.url}}" height="150" width="200"> <br/> ' +
                     '<p>{{dot.working_hours}}</p>',
                     hintContent: 'Очередная точка'
@@ -24,10 +25,30 @@
             {% endfor %}
             ;
         }
+
+
+        function get_coords(address) 
+        {
+            ymaps.geocode(address, { results: 1 }).then(function (res) 
+            {
+                var firstGeoObject = res.geoObjects.get(0);
+                var cords = firstGeoObject.geometry.getCoordinates();
+                
+                alert(cords[0]+' '+cords[1])
+                
+                
+            }, 
+            function (err) 
+            {
+                alert(err.message);
+            })
+
+        } 
+
     </script>
 
     
-    <div id = "map" style = "width: 100%; height: 750px"></div> 
+    <div id = "map" style = "width: 100%; height: 100%"></div> 
 
 
 
