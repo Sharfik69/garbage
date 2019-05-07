@@ -13,8 +13,12 @@
             myMap.geoObjects      
             {% for dot in dots %}              
                 .add(new ymaps.Placemark([{{ dot.x }}, {{ dot.y }}], {
-                    balloonContent: '{{ dot.name }}',
-                    iconCaption: ''
+                    balloonContentHeader: '<a href = "#">{{dot.name}}</a><br>' +
+                        '<span class="description">{{dot.description}}</span>' + 
+                        '<p>Здесь принимают {{dot.category}} </p>',
+                    balloonContentBody: '<img src="{{dot.image.url}}" height="150" width="200"> <br/> ' +
+                    '<p>{{dot.working_hours}}</p>',
+                    hintContent: 'Очередная точка'
                 }))
             {% endfor %}
             ;
