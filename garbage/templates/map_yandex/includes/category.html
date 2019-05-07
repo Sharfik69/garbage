@@ -2,8 +2,8 @@
 
     {% for cat in category %} 
         <div>
-            <li class="nav-item"> {{cat.name}} </li>
             <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш">
+            <p>{{cat.name}}</p>
         </div>
     {% endfor %}
 
