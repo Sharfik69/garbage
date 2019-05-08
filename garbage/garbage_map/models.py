@@ -16,7 +16,7 @@ class Dot(models.Model):
     x = models.FloatField(verbose_name = 'Координата х')
     y = models.FloatField(verbose_name = 'Координата у')
     working_hours = models.TextField(default = '', verbose_name = 'Время и часы работы')
-    category = models.ManyToManyField(Category, verbose_name = 'Категория мусора')
+    categories = models.ManyToManyField(Category, verbose_name = 'Категория мусора')
     image = models.ImageField(upload_to='photo_garbage', blank = True, verbose_name = 'Изображение')
     
     def __unicode__(self):

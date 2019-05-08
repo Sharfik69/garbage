@@ -1,10 +1,24 @@
-{% extends "map_yandex/wrapper.html" %}
+{% extends "garbage_map/wrapper.html" %}
 
-{% block content %}
+{% block sidebar %}
+    {% for cat in categories %} 
+        <div>
+            <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш">
+            <p>{{cat.name}}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
 
+{% block main %}
 
     <script type="text/javascript">
-        ymaps.ready(init);    
+        ymaps.ready(init);
+
+        var dots = '{{ dots_json }}';
+
+        for (var i=0; i < dots.length;i++) {
+            myMap.geoObjects.add(dots[i]);
+        }
         
         function init(){ 
             var myMap = new ymaps.Map("map", {
@@ -12,12 +26,12 @@
                 zoom: 3,
                 controls: ['zoomControl', 'searchControl', 'typeSelector', 'routeButtonControl']
             });
-            myMap.geoObjects      
+            myMap.geoObjects
             {% for dot in dots %}              
                 .add(new ymaps.Placemark([{{ dot.x }}, {{ dot.y }}], {
                     balloonContentHeader: '<a href = "#">{{dot.name}}</a><br>' +
                         '<span class="description">{{dot.description}}</span>' + 
-                        '<p>Здесь принимают {{ dots.category.all|join:", " }} </p>',
+                        '<p>Здесь принимают {{ dot.categories.all|join:", " }} </p>',
                     balloonContentBody: '<img src="{{dot.image.url}}" height="150" width="200"> <br/> ' +
                     '<p>{{dot.working_hours}}</p>',
                     hintContent: 'Очередная точка'
