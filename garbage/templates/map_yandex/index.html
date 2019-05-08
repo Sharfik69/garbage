@@ -27,28 +27,10 @@
         }
 
 
-        function get_coords(address) 
-        {
-            ymaps.geocode(address, { results: 1 }).then(function (res) 
-            {
-                var firstGeoObject = res.geoObjects.get(0);
-                var cords = firstGeoObject.geometry.getCoordinates();
-                
-                alert(cords[0]+' '+cords[1])
-                
-                
-            }, 
-            function (err) 
-            {
-                alert(err.message);
-            })
-
-        } 
-
     </script>
 
     
-    <div id = "map" style = "width: 100%; height: 100%"></div> 
+    <div id = "map" style = "width: 100%; height: 750px"></div> 
 
 
 
