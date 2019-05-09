@@ -3,41 +3,57 @@
 {% block sidebar %}
     {% for cat in categories %} 
         <div>
-            <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш">
+            <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш" onclick="print_dots({{cat.pk}}, false)">
             <p>{{cat.name}}</p>
         </div>
     {% endfor %}
 {% endblock %}
 
 {% block main %}
-
     <script type="text/javascript">
+        var dots = JSON.parse(('{{ dots_json }}').replace(/&quot;/g,'"'));
+        var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
+        var myMap;
         ymaps.ready(init);
-
-        var dots = '{{ dots_json }}';
-
-        for (var i=0; i < dots.length;i++) {
-            myMap.geoObjects.add(dots[i]);
-        }
-        
-        function init(){ 
-            var myMap = new ymaps.Map("map", {
+        function init()
+        { 
+            myMap = new ymaps.Map("map", {
                 center: [52.29778, 104.29639],
                 zoom: 3,
                 controls: ['zoomControl', 'searchControl', 'typeSelector', 'routeButtonControl']
             });
-            myMap.geoObjects
-            {% for dot in dots %}              
-                .add(new ymaps.Placemark([{{ dot.x }}, {{ dot.y }}], {
-                    balloonContentHeader: '<a href = "#">{{dot.name}}</a><br>' +
-                        '<span class="description">{{dot.description}}</span>' + 
-                        '<p>Здесь принимают {{ dot.categories.all|join:", " }} </p>',
-                    balloonContentBody: '<img src="{{dot.image.url}}" height="150" width="200"> <br/> ' +
-                    '<p>{{dot.working_hours}}</p>',
-                    hintContent: 'Очередная точка'
-                }))
-            {% endfor %}
-            ;
+            print_dots(-1, true);
+        }
+        function print_dots(category_filter, check)
+        {
+            myMap.geoObjects.removeAll();
+            for (var i = 0; i < dots.length; i++)
+            {  
+                if (check || dots[i].fields.categories.includes(category_filter))
+                { 
+                    myMap.geoObjects           
+                        .add(new ymaps.Placemark([dots[i].fields.x, dots[i].fields.y], {
+                            balloonContentHeader: '<a href = "#">' + dots[i].fields.name + '</a><br>' +
+                                '<span class="description">' + dots[i].fields.description + '</span>' + 
+                                '<p>Здесь принимают ' + get_category(dots[i].fields.categories) + ' </p>',
+                            balloonContentBody: '<img src="' + dots[i].fields.image + '" height="150" width="200"> <br/> ' +
+                                '<p>' + dots[i].fields.working_hours + '</p>',
+                            hintContent: dots[i].fields.name
+                        })); 
+                }
+            }
+        }
+        function get_category(garbage_categories)
+        {
+            var names_of_categories = []
+            for (var j = 0; j < categories.length; j++)
+            {
+                if (garbage_categories.includes(categories[j].pk))
+                {
+                    names_of_categories.push(categories[j].fields.name);
+                }
+            }
+            return names_of_categories.join(", ");
         }
 
 
