@@ -10,12 +10,14 @@
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <h3> Категории мусора </h3> 
-                    <ul class="nav flex-column">
+                <img src = "/garbage/photo/back.png" onclick="print_dots(-1, true)" 
+                    width = "50" height = "50" id = "arrow" style="display: none;">
+                <div class="sidebar-sticky" id = "list">
+                    <h2 id = "title_garbage"> Категории мусора </h2> 
+                    <div class="nav flex-column" id = "list_garbage">
                         {% block sidebar %}
                         {% endblock sidebar %}
-                    </ul>
+                    </div>
                 </div>
             </nav>
 
