@@ -4,7 +4,7 @@
     {% for cat in categories %} 
         <div>
             <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш" onclick="print_dots({{cat.pk}}, false)">
-            <p>{{cat.name}}</p>
+            <span>{{cat.name}}</span>
         </div>
     {% endfor %}
 {% endblock %}
@@ -13,6 +13,7 @@
     <script type="text/javascript">
         var dots = JSON.parse(('{{ dots_json }}').replace(/&quot;/g,'"'));
         var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
+        var div_list;
         var myMap;
         ymaps.ready(init);
         function init()
@@ -42,6 +43,31 @@
                         })); 
                 }
             }
+            if (!check)
+            {
+                document.getElementById("list_garbage").style.display = 'none';
+                document.getElementById("arrow").style.display = '';
+                document.getElementById("title_garbage").innerHTML = get_category([category_filter]);
+                div_list = document.createElement('div');
+                list.appendChild(div_list);
+                for (var i = 0; i < dots.length; i++)
+                {
+                    if (dots[i].fields.categories.includes(category_filter))
+                    {
+                        var newLi = document.createElement('p');
+                        newLi.innerHTML = dots[i].fields.name;
+                        div_list.appendChild(newLi);
+                    }
+                }
+                
+            }
+            else
+            {
+                document.getElementById("list_garbage").style.display = '';
+                document.getElementById("arrow").style.display = 'none';
+                document.getElementById("title_garbage").innerHTML = 'Категории мусора';
+                list.removeChild(div_list);
+            }
         }
         function get_category(garbage_categories)
         {
@@ -55,7 +81,6 @@
             }
             return names_of_categories.join(", ");
         }
-
 
     </script>
 
