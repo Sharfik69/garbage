@@ -21,9 +21,15 @@
             myMap = new ymaps.Map("map", {
                 center: [52.29778, 104.29639],
                 zoom: 3,
-                controls: ['zoomControl', 'searchControl', 'typeSelector', 'routeButtonControl']
+                controls: ['zoomControl', 'typeSelector', 'routeButtonControl']
             });
             print_dots(-1, true);
+        }
+        function set_center(x, y)
+        {
+            myMap.setCenter([x, y], 14, {
+                checkZoomRange: true
+            });
         }
         function print_dots(category_filter, check)
         {
@@ -54,8 +60,9 @@
                 {
                     if (dots[i].fields.categories.includes(category_filter))
                     {
-                        var newLi = document.createElement('p');
+                        var newLi = document.createElement('button');
                         newLi.innerHTML = dots[i].fields.name;
+                        newLi.setAttribute('onClick', "set_center(" + dots[i].fields.x + "," + dots[i].fields.y + ")");
                         div_list.appendChild(newLi);
                     }
                 }
