@@ -5,17 +5,65 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=<89182932-e0e9-4f0c-817f-32c2c6f15023>&lang=ru_RU" type="text/javascript"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <style type="text/css">
+    .sidebar_header {
+        padding-top: 17px;
+        padding-right: 15px;
+        padding-bottom: 17px;
+        padding-left: 15px;
+    }
+    .sidebar_title h2{
+        font-family: "SF UI Display Bold";
+        color: #000;
+        font-size: 17px;
+        margin-bottom: 0px; 
+    }
+    .sidebar_title {
+        border-bottom: 1px solid #d8d8d8;
+        border-top: 1px solid #d8d8d8;
+        margin-bottom: 20px;
+
+        padding-top: 17px;
+        padding-right: 15px;
+        padding-bottom: 17px;
+        padding-left: 15px;
+
+    }
+
+    .category_ico {
+        text-align: center;
+        padding: 0%;
+    }
+    .category_ico p{
+        color: #6c757d;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        text-align: center;
+        padding-top: 5px;
+    }
+    .category_ico img{
+        max-width: 40px;
+        max-height: 40px;
+        display: block;
+        margin: 0 auto; 
+
+    }
+    </style>
+
+
 </head>
 <body>
         
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <nav class="col-md-2 px-0 d-none d-md-block bg-light sidebar shadow-lg">
                 {% block sidebar %}
                 {% endblock sidebar %}
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <main role="main" class="col-md-4 ml-sm-auto col-lg-10 px-0">
                 {% block main %}
                 {% endblock %}
             </main>

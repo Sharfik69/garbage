@@ -1,27 +1,37 @@
 {% extends "garbage_map/wrapper.html" %}
 
 {% block sidebar %}
-
+    <div class="sidebar_header">
+        <img src = "/garbage/photo/download.svg">
+    </div>
     <div id="view_index">
-        <h2> Категории мусора </h2> 
-        <div class="nav flex-column" id = "list_garbage">
+        <div class="row sidebar_title">
+            <h2> Категории мусора </h2> 
+        </div>
+        <div class="nav row" id = "list_garbage">
         {% for cat in categories %} 
-            <div>
-                <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш" onClick="view_category({{cat.pk}}, false)">
-                <span>{{ cat.name }}</span>
+            <div class="category_ico col-md-4">
+                <img src = "{{ cat.image.url }}" onClick="view_category({{cat.pk}}, false)">
+                <p>{{ cat.name }}</p>
             </div>
         {% endfor %}        
         </div>
     </div>
     
     <div id="view_category" style="display:none">
-        <img src = "/garbage/photo/back.png" onclick="view_index()" 
-            width = "50" height = "50" id = "arrow">
-        <h2 id = "title_garbage">Определенная категория</h2>
+        <div class="row sidebar_title">
+            <img src = "/garbage/photo/back.png" onclick="view_index()" 
+                width = "50" height = "50" id = "arrow">
+            <h2 id = "title_garbage">Определенная категория</h2>
+        </div>
     </div>
 
     <div id="view_firm" style="display:none">
-        <h2 id = "title_firm">Какая-то фирма</h2> 
+        <div class="row sidebar_title">
+            <img src = "/garbage/photo/back.png" onclick="view_category(-1)" 
+                width = "50" height = "50" id = "arrow">
+            <h2 id = "title_firm">Какая-то фирма</h2>
+        </div>
     </div>
 
     
@@ -34,9 +44,9 @@
 
     <script>
         var dots = {{ dots_json|safe }};
-        var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
-        var div_list;
-        var myMap;
+        var categories = {{ categories_json|safe }};
+        //var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
+        var div_list, myMap, last_cat;
         var list = document.getElementById('list');
         $(function(){
             ymaps.ready(init);
@@ -48,7 +58,7 @@
             myMap = new ymaps.Map("map", {
                 center: [52.287054, 104.281047],
                 zoom: 13,
-                controls: ['zoomControl', 'typeSelector', 'routeButtonControl']
+                controls: []
             });
             show_dots(-1, true);
         }
@@ -65,21 +75,24 @@
             $('#view_index').show();
             $('#view_category').hide();
             $('#view_firm').hide();
-            $('div#view_category .category').remove();
             show_dots(-1, true);
         }
         function view_category(cat_id)
         {
+            cat_id == -1 ? cat_id = last_cat: last_cat = cat_id;
+            $('div#view_category .category').remove();
             $('#view_index').hide();
             $('#view_category').show();
             $('#view_firm').hide();
             $('h2#title_garbage').text(get_category([cat_id]));
             show_dots(cat_id, false);
-            firms_list = get_firms(cat_id);
+            var firms_list = $.grep(dots, function(n, i){
+                return n.categories.includes(cat_id);
+            });
             for (var i = 0; i < firms_list.length; i++)
             {
                 $('#view_category').append( '<div class = "category" onClick="view_firm(' + firms_list[i].id + ')"> </div>');
-                $('.category:last').append( '<h4>' + firms_list[i].name + '</h4>' +
+                $('.category:last').append( '<h4 class = "name">' + firms_list[i].name + '</h4>' +
                                             '<p class = "date">' + firms_list[i].working_hours + '</p>' + 
                                             '<p class = "addres">' + firms_list[i].addres + '</p>'
                 );
@@ -89,23 +102,30 @@
 
         function view_firm(firm_id)
         {
+            $('div#view_firm #about_firm').remove();
             $('#view_index').hide();
             $('#view_category').hide();
-            $('#view_firm').show();
-            $('h2#title_firm').text(dots[firm_id].name);
-        }
-
-        function get_firms(cat_id)
-        {
-            var firms_list = [];
-            for (var i = 0; i < dots.length; i++)
+            $('#view_firm').show(); 
+            var chs_firm = $.grep(dots, function(n, i){
+                return n.id === firm_id;
+            });
+            $('h2#title_firm').text($.grep(categories, function(n, i){
+                return n.id === last_cat;
+            })[0].name);
+            $('#view_firm').append( '<div id="about_firm""> </div>');
+            $('#about_firm').append(   '<h4 class="name">' + chs_firm[0].name + '</h4>' +
+                                            '<p class="addres">' + chs_firm[0].addres + '</p>' +
+                                            '<img src="' + chs_firm[0].image + '" width = "200" height = "100"/>' +
+                                            '<p class="date">' + chs_firm[0].working_hours + '</p>' + 
+                                            '<p class="about">' + chs_firm[0].description + '</p>' + 
+                                            '<p class="another_cat"> Также принимается </p>' +
+                                            '<div id="another_cat"> </div>'
+            );
+            for (var i = 0; i < chs_firm[0].categories.length; i++)
             {
-                if (dots[i].categories.includes(cat_id))
-                {
-                    firms_list.push(dots[i]);
-                }
+                $('#another_cat').append('<div class="bloc_cat">' + get_category([chs_firm[0].categories[i]]) + '</div>');
             }
-            return firms_list;
+
         }
 
         function show_dots(category_filter, check)
