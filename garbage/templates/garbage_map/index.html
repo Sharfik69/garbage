@@ -1,29 +1,56 @@
 {% extends "garbage_map/wrapper.html" %}
 
 {% block sidebar %}
-    {% for cat in categories %} 
-        <div>
-            <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш" onclick="print_dots({{cat.pk}}, false)">
-            <span>{{cat.name}}</span>
+
+    <div id="view_index">
+        <h2> Категории мусора </h2> 
+        <div class="nav flex-column" id = "list_garbage">
+        {% for cat in categories %} 
+            <div>
+                <img src = "{{ cat.image.url }}"  width = "100" height = "100" alt = "Мыш" onClick="view_category({{cat.pk}}, false)">
+                <span>{{ cat.name }}</span>
+            </div>
+        {% endfor %}        
         </div>
-    {% endfor %}
+    </div>
+    
+    <div id="view_category" style="display:none">
+        <img src = "/garbage/photo/back.png" onclick="view_index()" 
+            width = "50" height = "50" id = "arrow">
+        <h2 id = "title_garbage">Определенная категория</h2>
+    </div>
+
+    <div id="view_firm" style="display:none">
+        <h2 id = "title_firm">Какая-то фирма</h2> 
+    </div>
+
+    
+    
+
+
 {% endblock %}
 
 {% block main %}
-    <script type="text/javascript">
-        var dots = JSON.parse(('{{ dots_json }}').replace(/&quot;/g,'"'));
+
+    <script>
+        var dots = {{ dots_json|safe }};
         var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
         var div_list;
         var myMap;
-        ymaps.ready(init);
+        var list = document.getElementById('list');
+        $(function(){
+            ymaps.ready(init);
+        });
+
+        
         function init()
         { 
             myMap = new ymaps.Map("map", {
-                center: [52.29778, 104.29639],
-                zoom: 3,
+                center: [52.287054, 104.281047],
+                zoom: 13,
                 controls: ['zoomControl', 'typeSelector', 'routeButtonControl']
             });
-            print_dots(-1, true);
+            show_dots(-1, true);
         }
         function set_center(x, y)
         {
@@ -31,49 +58,76 @@
                 checkZoomRange: true
             });
         }
-        function print_dots(category_filter, check)
+
+
+        function view_index()
+        {
+            $('#view_index').show();
+            $('#view_category').hide();
+            $('#view_firm').hide();
+            $('div#view_category .category').remove();
+            show_dots(-1, true);
+        }
+        function view_category(cat_id)
+        {
+            $('#view_index').hide();
+            $('#view_category').show();
+            $('#view_firm').hide();
+            $('h2#title_garbage').text(get_category([cat_id]));
+            show_dots(cat_id, false);
+            firms_list = get_firms(cat_id);
+            for (var i = 0; i < firms_list.length; i++)
+            {
+                $('#view_category').append( '<div class = "category" onClick="view_firm(' + firms_list[i].id + ')"> </div>');
+                $('.category:last').append( '<h4>' + firms_list[i].name + '</h4>' +
+                                            '<p class = "date">' + firms_list[i].working_hours + '</p>' + 
+                                            '<p class = "addres">' + firms_list[i].addres + '</p>'
+                );
+            }
+        }
+
+
+        function view_firm(firm_id)
+        {
+            $('#view_index').hide();
+            $('#view_category').hide();
+            $('#view_firm').show();
+            $('h2#title_firm').text(dots[firm_id].name);
+        }
+
+        function get_firms(cat_id)
+        {
+            var firms_list = [];
+            for (var i = 0; i < dots.length; i++)
+            {
+                if (dots[i].categories.includes(cat_id))
+                {
+                    firms_list.push(dots[i]);
+                }
+            }
+            return firms_list;
+        }
+
+        function show_dots(category_filter, check)
         {
             myMap.geoObjects.removeAll();
             for (var i = 0; i < dots.length; i++)
-            {  
-                if (check || dots[i].fields.categories.includes(category_filter))
+            {
+                if (check || dots[i].categories.includes(category_filter))
                 { 
                     myMap.geoObjects           
-                        .add(new ymaps.Placemark([dots[i].fields.x, dots[i].fields.y], {
-                            balloonContentHeader: '<a href = "#">' + dots[i].fields.name + '</a><br>' +
-                                '<span class="description">' + dots[i].fields.description + '</span>' + 
-                                '<p>Здесь принимают ' + get_category(dots[i].fields.categories) + ' </p>',
-                            balloonContentBody: '<img src="' + dots[i].fields.image + '" height="150" width="200"> <br/> ' +
-                                '<p>' + dots[i].fields.working_hours + '</p>',
-                            hintContent: dots[i].fields.name
+                        .add(new ymaps.Placemark([dots[i].x, dots[i].y], {
+                            balloonContentHeader: 
+                                '<a href = "#">' + dots[i].name + '</a><br>' +
+                                '<span class="description">' + dots[i].description + '</span>' + 
+                                '<p>Здесь принимают ' + get_category(dots[i].categories) + ' </p>',
+                            balloonContentBody: 
+                                '<img src="' + dots[i].image + '" height="150" width="200"> <br/> ' +
+                                '<p>' + dots[i].working_hours + '</p>',
+                            hintContent: 
+                                dots[i].name
                         })); 
                 }
-            }
-            if (!check)
-            {
-                document.getElementById("list_garbage").style.display = 'none';
-                document.getElementById("arrow").style.display = '';
-                document.getElementById("title_garbage").innerHTML = get_category([category_filter]);
-                div_list = document.createElement('div');
-                list.appendChild(div_list);
-                for (var i = 0; i < dots.length; i++)
-                {
-                    if (dots[i].fields.categories.includes(category_filter))
-                    {
-                        var newLi = document.createElement('button');
-                        newLi.innerHTML = dots[i].fields.name;
-                        newLi.setAttribute('onClick', "set_center(" + dots[i].fields.x + "," + dots[i].fields.y + ")");
-                        div_list.appendChild(newLi);
-                    }
-                }
-                
-            }
-            else
-            {
-                document.getElementById("list_garbage").style.display = '';
-                document.getElementById("arrow").style.display = 'none';
-                document.getElementById("title_garbage").innerHTML = 'Категории мусора';
-                list.removeChild(div_list);
             }
         }
         function get_category(garbage_categories)
@@ -81,13 +135,14 @@
             var names_of_categories = []
             for (var j = 0; j < categories.length; j++)
             {
-                if (garbage_categories.includes(categories[j].pk))
+                if (garbage_categories.includes(categories[j].id))
                 {
-                    names_of_categories.push(categories[j].fields.name);
+                    names_of_categories.push(categories[j].name);
                 }
             }
             return names_of_categories.join(", ");
         }
+        
 
     </script>
 

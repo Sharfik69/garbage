@@ -8,9 +8,31 @@ import json
 
 
 def index(request, cat=None):
-    dots_json = serializers.serialize('json', Dot.objects.all())
-    categories_json = serializers.serialize('json', Category.objects.all())
-    print(dots_json)
-    context = {'dots_json': dots_json, 'categories_json': categories_json, 'categories': Category.objects.all()}
+
+    dots = []
+    for dot in Dot.objects.all():
+        dot_item = {
+            'id': dot.id,
+            'name': dot.name,
+            'description': dot.description,
+            'x': dot.x,
+            'y': dot.y,
+            'working_hours': dot.working_hours,
+            'addres': dot.addres,
+            'image': dot.image.url,
+            'categories': [id[0] for id in dot.categories.values_list('id')],
+        }
+        dots.append(dot_item)
+    categories = []
+    for cat in Category.objects.all():
+        cat_item = {
+            'id': cat.id,
+            'name': cat.name,
+            'image': cat.image.url,
+        }
+        categories.append(cat_item)
+    #categories_json = serializers.serialize('json', Category.objects.all())
+    # print(dots_json)
+    context = {'dots_json': json.dumps(list(dots)), 'categories_json': json.dumps(list(categories)), 'categories': Category.objects.all()}
     
     return render(request, 'garbage_map/index.html', context)

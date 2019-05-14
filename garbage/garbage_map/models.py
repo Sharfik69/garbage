@@ -13,6 +13,7 @@ class Category(models.Model):
 class Dot(models.Model):
     name = models.CharField(max_length = 120, default = '', verbose_name = 'Название пункта')
     description = models.CharField(max_length = 120, default = '',  verbose_name = 'Описание')
+    addres = models.CharField(max_length = 512, default = '',  verbose_name = 'Адрес')
     x = models.FloatField(verbose_name = 'Координата х')
     y = models.FloatField(verbose_name = 'Координата у')
     working_hours = models.TextField(default = '', verbose_name = 'Время и часы работы')
