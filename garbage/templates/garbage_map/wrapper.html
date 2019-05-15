@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <style type="text/css">
+    #list_garbage {
+        padding-top: 17px;
+    }
     .sidebar_header {
         padding-top: 17px;
         padding-right: 15px;
@@ -17,16 +20,19 @@
         color: #000;
         font-size: 17px;
         margin-bottom: 0px; 
+        font-weight: 600;
     }
     .sidebar_title {
         border-bottom: 1px solid #d8d8d8;
         border-top: 1px solid #d8d8d8;
-        margin-bottom: 20px;
-
+        margin-bottom: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
         padding-top: 17px;
-        padding-right: 15px;
+        padding-right: 17px;
         padding-bottom: 17px;
-        padding-left: 15px;
+        padding-left: 17px;
+        justify-content: space-between;
 
     }
 
@@ -46,9 +52,83 @@
     .category_ico img{
         max-width: 40px;
         max-height: 40px;
-        display: block;
         margin: 0 auto; 
 
+    }
+
+    .firm {
+        display: block;
+        margin-left: 20px;
+        padding-top: 17px;
+    }
+    .firm h3 {
+        font-family: "SF UI Display Bold";
+        color: #000;
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+    .firm p {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #addres {
+        opacity: 0.7;
+    }
+
+    .firm_title {
+        background: #000;
+        margin: 0px;
+
+    }
+    .firm_title p {
+        color: #FFFFFF;
+        margin-bottom: 0px;
+        padding: 0px 10px 10px 17px;
+    }
+    .firm_title h3{
+        font-family: "SF UI Display Bold";
+        color: #FFFFFF;
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 5px;
+        padding: 17px 10px 5px 17px;
+        
+    }
+
+    #about_firm img{
+        max-height: 150px;
+        width: 100%;
+    }
+
+    .inform, .inform_2 {
+        padding: 10px 17px 0px 17px;
+        margin-bottom: 0px;
+    }
+
+    .inform_2 {
+        margin-top: 15px;
+        opacity: 0.8;
+    }
+
+    #another_cat {
+        padding: 5px 17px 17px 17px
+    }
+
+    .bloc_cat {
+        border: 1.4px solid; /* Параметры границы */
+        padding: 3px;
+        margin: 5px 5px 5px 0px;
+        float:left;
+        border-radius: 5px;
+    }
+
+    .bloc_cat p {
+        margin-bottom: 0px;
+        font-family: "SF UI Display Regular";
+        font-size: 16px;
+        color: #000;
     }
     </style>
 
@@ -58,15 +138,18 @@
         
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-2 px-0 d-none d-md-block bg-light sidebar shadow-lg">
-                {% block sidebar %}
-                {% endblock sidebar %}
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar px-0">
+                <div class="sidebar-sticky">  
+                    {% block sidebar %}
+                    {% endblock sidebar %}
+                </div>
             </nav>
 
-            <main role="main" class="col-md-4 ml-sm-auto col-lg-10 px-0">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-0">
                 {% block main %}
                 {% endblock %}
             </main>
+
         </div>
     </div>
     
