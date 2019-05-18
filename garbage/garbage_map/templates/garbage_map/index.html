@@ -39,11 +39,10 @@
 {% endblock %}
 
 {% block main %}
-
+{% load staticfiles %}
     <script>
         var dots = {{ dots_json|safe }};
         var categories = {{ categories_json|safe }};
-        //var categories = JSON.parse(('{{ categories_json }}').replace(/&quot;/g,'"'));
         var div_list, myMap, last_cat;
         var list = document.getElementById('list');
         $(function(){
