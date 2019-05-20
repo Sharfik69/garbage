@@ -6,7 +6,11 @@ from .forms import DotForm
 
 class PersonAdmin(admin.ModelAdmin):
     form = DotForm
-    change_form_template = 'admin/app/model/change_form.html'
+    change_form_template = 'admin/app/model/change_form_dot.html'
+
+class CategoryAdmin(admin.ModelAdmin):
+    change_form_template = 'admin/app/model/sort_category.html'
+    
 
 admin.site.register(Dot, PersonAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)

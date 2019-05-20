@@ -1,0 +1,56 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+    {{ block.super }}
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+    #sortable { 
+        margin: 0; 
+        padding: 0; 
+        width: 450px; 
+    }
+    #sortable li { 
+        list-style-type: none; 
+        margin: 3px 3px 3px 0; 
+        padding: 1px; 
+        float: left; 
+        width: 50px; 
+        height: 50px; 
+        font-size: 2em; 
+        text-align: center; 
+    }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+        } );
+    </script>
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    <div class="nav row" id = "list_garbage">
+        {% for cat in original %} 
+            <div class="category_ico col-md-4">
+                <img src = "{{ cat.image.url }}" onClick="view_category({{cat.pk}}, false)">
+                <p>{{ cat.name }}</p>
+            </div>
+        {% endfor %}        
+    </div>
+    <div style="height:400px; width:250px;">
+        <ul id="sortable">
+            <li class="ui-state-default">1</li>
+            <li class="ui-state-default">2</li>
+            <li class="ui-state-default">3</li>
+            <li class="ui-state-default">4</li>
+            <li class="ui-state-default">5</li>
+            <li class="ui-state-default">6</li>
+            <li class="ui-state-default">7</li>
+        </ul>
+    </div>
+    {{ block.super }}
+{% endblock %}

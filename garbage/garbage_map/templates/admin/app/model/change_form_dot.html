@@ -15,7 +15,6 @@
                 var cords = firstGeoObject.geometry.getCoordinates();
                 document.getElementById('id_x').value = cords[0];
                 document.getElementById('id_y').value = cords[1];
-                //alert(cords[0]+' '+cords[1])
                 
                 
             });
@@ -27,6 +26,5 @@
 {% block submit_buttons_bottom %}
     <input type="text" onChange="get_coords(this.value)"/> 
     <input type="button" value="{% trans 'Another Button' %}" name="_anotherbutton" />
-
     {{ block.super }}
 {% endblock %}
