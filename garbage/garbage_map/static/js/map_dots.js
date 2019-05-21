@@ -16,7 +16,16 @@ function view_index() // Отображаем все категории мусо
     $('#view_category').hide();
     $('#view_firm').hide();
     show_dots(-1, true);
+  //  f(true, false, false);
 }
+/*
+function f(a, b, c)
+{
+    a ? $('#view_index').show() : $('#view_index').hide();
+    b ? $('#view_category').show(): $('#view_category').hide();
+    c ? $('#view_firm').show() : $('#view_firm').hide();
+}
+*/
 function view_category(cat_id) //Отображаем весь список точек приема мусора в сайдбаре
 {
     cat_id == -1 ? cat_id = last_cat: last_cat = cat_id;
