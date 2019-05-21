@@ -9,7 +9,8 @@ class PersonAdmin(admin.ModelAdmin):
     change_form_template = 'admin/app/model/change_form_dot.html'
 
 class CategoryAdmin(admin.ModelAdmin):
-    change_form_template = 'admin/app/model/sort_category.html'
+    pass
+    # change_form_template = 'admin/app/model/sort_category.html'
     
 
 admin.site.register(Dot, PersonAdmin)
