@@ -1,10 +1,3 @@
-var dots = {{ dots_json|safe }};
-var categories = {{ categories_json|safe }};
-var div_list, myMap, last_cat;
-var list = document.getElementById('list');
-$(function(){
-    ymaps.ready(init);
-});
 
 
 function init()
