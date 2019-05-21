@@ -8,5 +8,5 @@ class DotForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'ООО Ромашка'}),
-            'addres': forms.TextInput(attrs={'onChange': 'get_coords(this.value)'})
+            'addres': forms.TextInput(attrs={'placeholder': 'Адрес'})
         }
