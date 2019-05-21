@@ -132,8 +132,7 @@
         color: #000;
     }
     </style>
-
-
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
         
@@ -153,6 +152,8 @@
 
         </div>
     </div>
+
+    {% block bottom_scripts %}{% endblock %}
     
 </body>
 </html>

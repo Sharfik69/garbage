@@ -1,9 +1,18 @@
 {% extends "garbage_map/wrapper.html" %}
 {% load staticfiles %}
 
+{% block extra_head %}
+    <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
+{% endblock %}
+
 {% block sidebar %}
-    <div class="sidebar_header">
-        <img src = "/garbage/photo/download.svg">
+    <div class="recycle__header">
+        <a href="/" class="recycle__logo"></a>
+        <a href="#" class="hamburger j-hamburger">
+            <div class="hamburger__line hamburger__line_top"></div>
+            <div class="hamburger__line hamburger__line_middle"></div>
+            <div class="hamburger__line hamburger__line_bottom"></div>
+        </a>
     </div>
     <div id="view_index">
         <div class="row sidebar_title">
@@ -49,7 +58,14 @@
     
     <div id = "map" style = "width: 100%; height: 100vh"></div> 
 
-
-
-
 {% endblock %} 
+
+
+{% block bottom_scripts %}
+    <script>
+        var less = {
+            javascriptEnabled: true
+        };
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+{% endblock %}

@@ -1,0 +1,30 @@
+#m-svg(@svg) {
+    @url: `encodeURIComponent(@{svg})`;
+    background-image: url("data:image/svg+xml,@{url}");
+    background-position: center;
+    background-size: contain;
+}
+
+// Transitions: all <property> ease-out <delay>
+.transition(@transition) {
+    -webkit-transition: @transition;
+    -moz-transition: @transition;
+    -ms-transition: @transition;
+    -o-transition: @transition;
+    transition: @transition;
+}
+
+// Transformations
+.rotate(@degrees) {
+    -webkit-transform: rotate(@degrees);
+    -moz-transform: rotate(@degrees);
+    -ms-transform: rotate(@degrees);
+    -o-transform: rotate(@degrees);
+    transform: rotate(@degrees);
+}
+
+// Opacity
+.opacity(@opacity: 100) {
+    opacity: @opacity / 100;
+    filter: e(%("alpha(opacity=%d)", @opacity));
+}
