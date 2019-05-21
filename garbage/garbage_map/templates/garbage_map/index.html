@@ -11,8 +11,10 @@
         </div>
         <div class="nav row" id = "list_garbage">
         {% for cat in categories %} 
-            <div class="category_ico col-md-4">
-                <img src = "{{ cat.image.url }}" onClick="view_category({{cat.pk}}, false)">
+            <div class="category_ico col-md-4" onClick="view_category({{cat.pk}}, false)">
+                {% if cat.image %}
+                <img src = "{{ cat.image.url }}">
+                {% endif %}
                 <p>{{ cat.name }}</p>
             </div>
         {% endfor %}        

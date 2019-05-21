@@ -19,17 +19,24 @@ def index(request, cat=None):
             'y': dot.y,
             'working_hours': dot.working_hours,
             'addres': dot.addres,
-            'image': dot.image.url,
+            'image': '',
             'categories': [id[0] for id in dot.categories.values_list('id')],
         }
+        if dot.image:
+            dot['image'] = dot.image.url
+        
         dots.append(dot_item)
+    
     categories = []
     for cat in Category.objects.all():
         cat_item = {
             'id': cat.id,
             'name': cat.name,
-            'image': cat.image.url,
+            'image': '',
         }
+        if cat.image:
+            cat_item['image'] = cat.image.url
+        
         categories.append(cat_item)
     #categories_json = serializers.serialize('json', Category.objects.all())
     # print(dots_json)
