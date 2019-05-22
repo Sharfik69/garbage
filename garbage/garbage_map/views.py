@@ -28,8 +28,10 @@ def index(request, cat=None):
         cat_item = {
             'id': cat.id,
             'name': cat.name,
-            'image': cat.image.url,
+            'image': '',
         }
+        if cat.image:
+            cat_item['image'] = cat.image.url
         categories.append(cat_item)
     #categories_json = serializers.serialize('json', Category.objects.all())
     # print(dots_json)
