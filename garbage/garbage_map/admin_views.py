@@ -13,8 +13,10 @@ def get_cat(request):
             cat_item = {
                 'id': cat.id,
                 'name': cat.name,
-                'image': cat.image.url,
+                'image': '',
             }
+            if cat.image:
+                cat_item['image'] = cat.image.url
             categories.append(cat_item)
         return HttpResponse(json.dumps(list(categories)))
     elif request.GET['show'] == '2':
