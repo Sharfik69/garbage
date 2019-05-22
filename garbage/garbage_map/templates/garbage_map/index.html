@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block extra_head %}
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
 {% endblock %}
 
@@ -15,19 +16,22 @@
         </a>
     </div>
     <div id="view_index">
-        <div class="row sidebar_title">
-            <h2> Выберете категорию </h2> 
+        <div class="recycle__header2">
+            Выберите категорию
         </div>
-        <div class="nav row" id = "list_garbage">
+
+        {% spaceless %}
+        <div class="catlist" id = "slist_garbage">
         {% for cat in categories %} 
-            <div class="category_ico col-md-4" onClick="view_category({{cat.pk}}, false)">
+            <div class="catlist__item {% if cat.icon_class %}catlist__item_{{ cat.icon_class }}{% endif %}" onClick="view_category({{cat.pk}}, false)">
                 {% if cat.image %}
                 <img src = "{{ cat.image.url }}">
                 {% endif %}
-                <p>{{ cat.name }}</p>
+                <div class="catlist__name">{{ cat.name|safe }}</div>
             </div>
         {% endfor %}        
         </div>
+        {% endspaceless %}
     </div>
     
     <div id="view_category" style="display:none">

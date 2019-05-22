@@ -5,6 +5,11 @@
     background-size: contain;
 }
 
+#bi-svg(@svg) {
+    @url: `encodeURIComponent(@{svg})`;
+    background-image: url("data:image/svg+xml,@{url}");
+}
+
 // Transitions: all <property> ease-out <delay>
 .transition(@transition) {
     -webkit-transition: @transition;
