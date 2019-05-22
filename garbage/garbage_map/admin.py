@@ -1,7 +1,7 @@
 from django.contrib import admin
 from garbage_map.models import Dot
 from garbage_map.models import Category
-from .forms import DotForm
+from .forms import DotForm, CatForm
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -9,7 +9,7 @@ class PersonAdmin(admin.ModelAdmin):
     change_form_template = 'admin/app/model/change_form_dot.html'
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    form = CatForm
     # change_form_template = 'admin/app/model/sort_category.html'
     
 

@@ -1,0 +1,65 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+{% block extrahead %}
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #sortable {  
+            margin: 0; 
+            padding: 0; 
+            width: 350px; 
+        }
+        #sortable li { 
+            list-style-type: none; 
+            margin: 3px 3px 3px 0; 
+            padding: 1px; 
+            float: left; 
+            width: 100px; 
+            height: 90px; 
+            font-size: 10px; 
+            text-align: center; 
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        var cats;
+        $(function(){
+            if (window.location.pathname == '/admin/garbage_map/category/')
+            {
+                $.get('/garbage/get_cat/', {'show': 1})
+                .done(function(data){
+                    $('#content-main').append('<h2> Порядок отображения категорий </h2>');
+                    $('#content-main').append('<div id="sortable_block"> <ul id="sortable"> </ul> </div>');
+                    cats = JSON.parse(data);
+                    for (var i = 0; i < cats.length; i++)
+                    {
+                        $('#sortable').append('<li id="' + i + ' ' + cats[i].name + '" class="ui-state-default"><img src = "' + cats[i].image + '" width = "50px" height = "50px"> <p>' + cats[i].name + '</p></li>');
+                    }
+                    $('#sortable').sortable();
+                    $('#sortable').disableSelection();
+                    $('#sortable_block').append('<input type="button" id = "save_order" value="{% trans 'Сохранить текущий порядок сортировки' %}" name="_anotherbutton" style="margin: 0px 0px 0px 25px; padding: 5px 10px 5px 10px;"/>');
+                    $('#save_order').click(function() {
+                        var new_order = [];
+                        for (var i = 0; i < cats.length; i++)
+                        {
+                            var l_id = $('#sortable').children()[i].id;
+                            var test = {
+                                title: l_id.slice(2),
+                                new_id: i
+                            };
+                            new_order.push(test);
+                        }
+                        new_order = JSON.stringify(new_order);
+                        $.get('/garbage/get_cat/', {'show': 2, 'new_order': new_order});
+                        alert('Изменения сохранены');
+                    });
+                }); 
+            }
+        });
+
+        
+    </script>
+ 
+{% endblock %}

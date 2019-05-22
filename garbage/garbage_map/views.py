@@ -40,6 +40,6 @@ def index(request, cat=None):
         categories.append(cat_item)
     #categories_json = serializers.serialize('json', Category.objects.all())
     # print(dots_json)
-    context = {'dots_json': json.dumps(list(dots)), 'categories_json': json.dumps(list(categories)), 'categories': Category.objects.all()}
+    context = {'dots_json': json.dumps(list(dots)), 'categories_json': json.dumps(list(categories)), 'categories': Category.objects.order_by('order')}
     
     return render(request, 'garbage_map/index.html', context)

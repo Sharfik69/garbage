@@ -1,8 +1,4 @@
 *.pyc
 env/
 settings_local.py
-*.jpg
-*.png
-*.jpeg
-*.svg
 .vscode/settings.json
