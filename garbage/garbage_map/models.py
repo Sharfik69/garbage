@@ -6,7 +6,7 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length = 120, default = '', verbose_name = 'Название категории')
     image = models.ImageField(upload_to='photo', blank = True, verbose_name = 'Изображение')
-
+    order = models.IntegerField(default = 0, null = False)
     class Meta:
         verbose_name = u'категория отходов'
         verbose_name_plural = u'категории отходов'

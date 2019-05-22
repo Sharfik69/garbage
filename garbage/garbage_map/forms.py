@@ -10,3 +10,7 @@ class DotForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'ООО Ромашка'}),
             'addres': forms.TextInput(attrs={'placeholder': 'Адрес'})
         }
+class CatForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'image', 'order')
