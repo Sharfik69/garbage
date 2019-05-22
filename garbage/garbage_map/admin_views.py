@@ -6,22 +6,32 @@ from garbage_map.models import Category
 from django.core import serializers
 import json
 
+
 def get_cat(request):
-    if request.GET['show'] == '1':
-        categories = []
-        for cat in Category.objects.order_by('order'):
-            cat_item = {
-                'id': cat.id,
-                'name': cat.name,
-                'image': cat.image.url,
-            }
-            categories.append(cat_item)
-        return HttpResponse(json.dumps(list(categories)))
-    elif request.GET['show'] == '2':
-        new_order = request.GET['new_order']
-        new_order = json.loads(new_order)
-        for i in range(len(new_order)):
-            new_rec = Category.objects.get(id=new_order[i]['id_cat'])
-            new_rec.order = int(new_order[i]['new_id'])
-            new_rec.save()
-    return HttpResponse('hello world')
+    """
+    Отдает категории для списка сортировки
+    """
+    categories = []
+    for cat in Category.objects.order_by('order'):
+        cat_item = {
+            'id': cat.id,
+            'name': cat.name,
+            'image': cat.image.url,
+        }
+        categories.append(cat_item)
+    return HttpResponse(json.dumps(categories), content_type="application/json")
+
+
+def save_order(request):
+    """
+    Сохраняет порядок сортировки
+    """
+    new_order = request.GET['new_order']
+    new_order = json.loads(new_order)
+
+    for item in new_order:
+        cat = Category.objects.get(id=item['id'])
+        cat.order = int(item['order'])
+        cat.save()
+
+    return HttpResponse('ok')
