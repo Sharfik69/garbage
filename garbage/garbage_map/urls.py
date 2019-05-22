@@ -8,5 +8,6 @@ from . import views, admin_views
 
 urlpatterns = [
     url(r'^$', views.index, name = "index"),
-    url(r'^get_cat/$', admin_views.get_cat, name = "get_cat"), 
+    url(r'^admin/categories/$', admin_views.get_cat, name = "get_cat"), 
+    url(r'^admin/save_order/$', admin_views.save_order, name = "save_order"), 
 ]

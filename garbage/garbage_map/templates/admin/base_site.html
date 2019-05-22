@@ -21,45 +21,42 @@
             text-align: center; 
         }
     </style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        var cats;
         $(function(){
             if (window.location.pathname == '/admin/garbage_map/category/')
             {
-                $.get('/garbage/get_cat/', {'show': 1})
-                .done(function(data){
+                var CATEGORIES_URL = '{% url 'get_cat' %}';
+                var SAVE_ORDER_URL = '{% url 'save_order' %}';
+
+                $.get(CATEGORIES_URL).done(function(cats){
                     $('#content-main').append('<h2> Порядок отображения категорий </h2>');
-                    $('#content-main').append('<div id="sortable_block"> <ul id="sortable"> </ul> </div>');
-                    cats = JSON.parse(data);
+                    $('#content-main').append('<div id="sortable_block"><ul id="sortable"></ul></div>');
+                    
                     for (var i = 0; i < cats.length; i++)
                     {
-                        $('#sortable').append('<li id="' + cats[i].id + '" class="ui-state-default"><img src = "' + cats[i].image + '" width = "50px" height = "50px"> <p>' + cats[i].name + '</p></li>');
+                        $('#sortable').append('<li id="' + cats[i].id + '" class="ui-state-default"><img src="' + cats[i].image + '" width="50px" height="50px"><p>' + cats[i].name + '</p></li>');
                     }
                     $('#sortable').sortable();
                     $('#sortable').disableSelection();
-                    $('#sortable_block').append('<input type="button" id = "save_order" value="{% trans 'Сохранить текущий порядок сортировки' %}" name="_anotherbutton" style="margin: 0px 0px 0px 25px; padding: 5px 10px 5px 10px;"/>');
+                    $('#sortable_block').append('<input type="button" id="save_order" value="Сохранить порядок" name="_anotherbutton" style="margin: 0px 0px 0px 25px; padding: 5px 10px 5px 10px;"/>');
                     $('#save_order').click(function() {
                         var new_order = [];
                         for (var i = 0; i < cats.length; i++)
                         {
-                            var l_id = $('#sortable').children()[i].id;
-                            var test = {
-                                id_cat: l_id,
-                                new_id: i
-                            };
-                            new_order.push(test);
+                            var id = $('#sortable').children()[i].id;
+                            new_order.push(
+                            {
+                                id: id,
+                                order: i
+                            });
                         }
                         new_order = JSON.stringify(new_order);
-                        $.get('/garbage/get_cat/', {'show': 2, 'new_order': new_order});
-                        alert(new_order);
+                        $.get(SAVE_ORDER_URL, {'new_order': new_order});
                     });
                 }); 
             }
         });
-
-        
     </script>
  
 {% endblock %}
