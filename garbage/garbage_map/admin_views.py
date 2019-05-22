@@ -11,6 +11,7 @@ def get_cat(request):
         categories = []
         for cat in Category.objects.order_by('order'):
             cat_item = {
+                'id': cat.id,
                 'name': cat.name,
                 'image': cat.image.url,
             }
@@ -20,7 +21,7 @@ def get_cat(request):
         new_order = request.GET['new_order']
         new_order = json.loads(new_order)
         for i in range(len(new_order)):
-            new_rec = Category.objects.get(name=new_order[i]['title'])
+            new_rec = Category.objects.get(id=new_order[i]['id_cat'])
             new_rec.order = int(new_order[i]['new_id'])
             new_rec.save()
     return HttpResponse('hello world')

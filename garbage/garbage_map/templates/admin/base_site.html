@@ -35,7 +35,7 @@
                     cats = JSON.parse(data);
                     for (var i = 0; i < cats.length; i++)
                     {
-                        $('#sortable').append('<li id="' + i + ' ' + cats[i].name + '" class="ui-state-default"><img src = "' + cats[i].image + '" width = "50px" height = "50px"> <p>' + cats[i].name + '</p></li>');
+                        $('#sortable').append('<li id="' + cats[i].id + '" class="ui-state-default"><img src = "' + cats[i].image + '" width = "50px" height = "50px"> <p>' + cats[i].name + '</p></li>');
                     }
                     $('#sortable').sortable();
                     $('#sortable').disableSelection();
@@ -46,14 +46,14 @@
                         {
                             var l_id = $('#sortable').children()[i].id;
                             var test = {
-                                title: l_id.slice(2),
+                                id_cat: l_id,
                                 new_id: i
                             };
                             new_order.push(test);
                         }
                         new_order = JSON.stringify(new_order);
                         $.get('/garbage/get_cat/', {'show': 2, 'new_order': new_order});
-                        alert('Изменения сохранены');
+                        alert(new_order);
                     });
                 }); 
             }
