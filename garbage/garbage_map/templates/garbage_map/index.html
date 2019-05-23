@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block extra_head %}
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
 {% endblock %}
 
@@ -15,7 +15,7 @@
             <div class="hamburger__line hamburger__line_bottom"></div>
         </a>
     </div>
-    <div id="view_index">
+    <div id="view_index" style="display: block">
         <div class="recycle__subheader recycle__subheader_index">Выберите категорию</div>
 
         {% spaceless %}
@@ -31,7 +31,7 @@
         </div>
         {% endspaceless %}
 
-        <div class="catlist__contribute">
+        <div class="recycle__contribute">
             Информацию о новых пунктах сбора
             отправляйте на почту <a href="mailto:recycle@irk.ru">recycle@irk.ru</a>
         </div>
@@ -40,7 +40,19 @@
     <div id="view_category" style="display:none">
         <div class="recycle__subheader-category">
             <div class="recycle__back j-back" onclick="view_index()"></div>
-            <div class="recycle__subheader-category__title">Определенная категория</div>
+            <div class="recycle__subheader-category__title"></div>
+        </div>
+        <div class="firmlist">
+            <div class="firmlist__item" onclick="view_firm(1)">
+                <h3 class="firmlist__title">Утилит сервис</h3>
+                <div class="firmlist__hours">пн-пт 9:00 - 17:30</div>
+                <div class="firmlist__address">Николая Вилкова, 9а</div>
+            </div>
+            <div class="firmlist__item" onclick="view_firm(1)">
+                <h3 class="firmlist__title">Экологическая система проверки предприятий ИП Козлодоев Сервис</h3>
+                <div class="firmlist__hours">пн-пт 9:00 - 17:30</div>
+                <div class="firmlist__address">Николая Вилкова, 9а</div>
+            </div>
         </div>
     </div>
 

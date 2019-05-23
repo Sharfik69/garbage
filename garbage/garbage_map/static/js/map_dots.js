@@ -29,7 +29,7 @@ function f(a, b, c)
 function view_category(cat_id) //Отображаем весь список точек приема мусора в сайдбаре
 {
     cat_id == -1 ? cat_id = last_cat: last_cat = cat_id;
-    $('div#view_category .firm').remove();
+    $('#view_category .firmlist__item').remove();
     $('#view_index').hide();
     $('#view_category').show();
     $('#view_firm').hide();
@@ -41,10 +41,10 @@ function view_category(cat_id) //Отображаем весь список то
     });
     for (var i = 0; i < firms_list.length; i++)
     {
-        $('#view_category').append( '<div class = "firm" onClick="view_firm(' + firms_list[i].id + ')"> </div>');
-        $('.firm:last').append( '<h3>' + firms_list[i].name + '</h3>' +
-                                '<p id="hours">' + firms_list[i].working_hours + '</p>' + 
-                                '<p id="addres">' + firms_list[i].addres + '</p>'
+        $('.firmlist').append( '<div class="firmlist__item" onClick="view_firm(' + firms_list[i].id + ')"> </div>');
+        $('.firmlist__item:last').append( '<div class="firmlist__title">' + firms_list[i].name + '</div>' +
+                                '<div class="firmlist__hours">' + firms_list[i].working_hours + '</div>' + 
+                                '<div class="firmlist__address">' + firms_list[i].addres + '</div>'
         );
     }
 }
