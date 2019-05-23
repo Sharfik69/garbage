@@ -12,8 +12,11 @@ def get_cat(request):
         for cat in Category.objects.order_by('order'):
             cat_item = {
                 'name': cat.name,
-                'image': cat.image.url,
+                'name_html': cat.name_html,
+                'image': '',
             }
+            if cat.image:
+                cat_item['image'] = cat.image.url
             categories.append(cat_item)
         return HttpResponse(json.dumps(list(categories)))
     elif request.GET['show'] == '2':
