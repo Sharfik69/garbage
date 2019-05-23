@@ -33,7 +33,7 @@ function view_category(cat_id) //Отображаем весь список то
     $('#view_index').hide();
     $('#view_category').show();
     $('#view_firm').hide();
-    $('h2#title_garbage').text(get_category([cat_id]));
+    $('.recycle__subheader-category__title').text(get_category([cat_id]));
     show_dots(cat_id, false);
     set_center(52.287054, 104.281047, 13)
     var firms_list = $.grep(dots, function(n, i){

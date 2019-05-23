@@ -16,28 +16,31 @@
         </a>
     </div>
     <div id="view_index">
-        <div class="recycle__header2">
-            Выберите категорию
-        </div>
+        <div class="recycle__subheader recycle__subheader_index">Выберите категорию</div>
 
         {% spaceless %}
         <div class="catlist" id = "slist_garbage">
         {% for cat in categories %} 
-            <div class="catlist__item {% if cat.icon_class %}catlist__item_{{ cat.icon_class }}{% endif %}" onClick="view_category({{cat.pk}}, false)">
+            <div class="catlist__item {% if cat.icon_class %}catlist__item_{{ cat.icon_class }}{% endif %}" onClick="view_category({{ cat.pk }}, false)">
                 {% if cat.image %}
                 <img src = "{{ cat.image.url }}">
                 {% endif %}
-                <div class="catlist__name">{{ cat.name|safe }}</div>
+                <div class="catlist__name">{{ cat.name_html|safe|default:cat.name }}</div>
             </div>
         {% endfor %}
         </div>
         {% endspaceless %}
+
+        <div class="catlist__contribute">
+            Информацию о новых пунктах сбора
+            отправляйте на почту <a href="mailto:recycle@irk.ru">recycle@irk.ru</a>
+        </div>
     </div>
     
     <div id="view_category" style="display:none">
-        <div class="row sidebar_title">
-            <img src = "/garbage/photo/back.svg" onclick="view_index()" id = "arrow">
-            <h2  id = "title_garbage">Определенная категория</h2>
+        <div class="recycle__subheader-category">
+            <div class="recycle__back j-back" onclick="view_index()"></div>
+            <div class="recycle__subheader-category__title">Определенная категория</div>
         </div>
     </div>
 

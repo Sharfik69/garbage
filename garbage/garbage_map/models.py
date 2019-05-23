@@ -5,6 +5,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length = 120, default = '', verbose_name = 'Название категории')
+    name_html = models.CharField(max_length = 120, default = '', blank=True, verbose_name = 'Название категории (html)')
     image = models.ImageField(upload_to='photo', blank = True, verbose_name = 'Изображение')
     icon_class = models.CharField(max_length=100, default = '', verbose_name='Класс иконки')
     order = models.IntegerField(default = 0, null = False)
@@ -15,6 +16,7 @@ class Category(models.Model):
     
     def __unicode__(self):
         return self.name
+
 
 class Dot(models.Model):
     name = models.CharField(max_length = 120, default = '', verbose_name = 'Название пункта')

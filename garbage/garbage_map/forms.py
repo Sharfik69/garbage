@@ -13,4 +13,4 @@ class DotForm(forms.ModelForm):
 class CatForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('name', 'image', 'order')
+        fields = ('name', 'name_html', 'image', 'order')
