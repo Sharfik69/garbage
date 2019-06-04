@@ -23,7 +23,7 @@ def index(request, cat=None):
             'categories': [id[0] for id in dot.categories.values_list('id')],
         }
         if dot.image:
-            dot['image'] = dot.image.url
+            dot_item['image'] = dot.image.url
         
         dots.append(dot_item)
     
