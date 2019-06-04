@@ -6,7 +6,7 @@ from .forms import DotForm, CatForm
 
 class PersonAdmin(admin.ModelAdmin):
     form = DotForm
-    change_form_template = 'admin/app/model/change_form_dot.html'
+    change_form_template = 'admin/change_form_dot.html'
 
 class CategoryAdmin(admin.ModelAdmin):
     form = CatForm

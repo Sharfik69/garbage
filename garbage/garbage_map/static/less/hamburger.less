@@ -1,0 +1,50 @@
+.hamburger {
+    display: block;
+    width: 35px;
+    height: 35px;
+    transition: all .2s ease-in-out;
+    z-index: 10;
+
+    &__line {
+        margin-left: -10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 2px;
+        background: #000000;
+
+        &_top {
+            margin-top: -6px;
+            .transition(all 0.3s ease);
+        }
+
+        &_middle {
+            margin-top: -1px;
+            .transition(all 0.2s ease);
+        }
+
+        &_bottom {
+            margin-top: 4px;
+            .transition(all 0.3s ease);
+        }
+    }
+
+    &.show {
+        & .hamburger__line {
+            &_top {
+                top: 23px;
+                .rotate(-45deg);
+            }
+
+            &_middle {
+                .opacity(0);
+            }
+
+            &_bottom {
+                top: 13px;
+                .rotate(45deg);
+            }
+        }
+    }
+}

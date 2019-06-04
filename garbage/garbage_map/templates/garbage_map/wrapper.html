@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <title>Пункты сдачи вторсырья</title>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=89182932-e0e9-4f0c-817f-32c2c6f15023&lang=ru_RU" type="text/javascript"></script>
@@ -132,12 +132,11 @@
         color: #000;
     }
     </style>
-
-
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
         
-    <div class="container-fluid">
+    <div class="recycle container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-white sidebar px-0">
                 <div class="sidebar-sticky">  
@@ -153,6 +152,8 @@
 
         </div>
     </div>
+
+    {% block bottom_scripts %}{% endblock %}
     
 </body>
 </html>
