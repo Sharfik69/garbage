@@ -16,10 +16,8 @@ def get_cat(request):
         cat_item = {
             'id': cat.id,
             'name': cat.name,
-            'image': '',
+            'image': cat.icon_class,
         }
-        if cat.image:
-            cat_item['image'] = cat.image.url
         categories.append(cat_item)
     return HttpResponse(json.dumps(categories), content_type="application/json")
 

@@ -15,16 +15,13 @@
             <div class="hamburger__line hamburger__line_bottom"></div>
         </a>
     </div>
-    <div id="view_index" style="display: none">
+    <div id="view_index">
         <div class="recycle__subheader recycle__subheader_index">Выберите категорию</div>
 
         {% spaceless %}
         <div class="catlist" id = "slist_garbage">
         {% for cat in categories %} 
-            <div class="catlist__item {% if cat.icon_class %}catlist__item_{{ cat.icon_class }}{% endif %}" onClick="view_category({{ cat.pk }}, false)">
-                {% if cat.image %}
-                <img src = "{{ cat.image.url }}">
-                {% endif %}
+            <div class="catlist__item {% if cat.icon_class %}catlist__item_{{ cat.icon_class }}{% endif %}" onClick="view_category({{ cat.pk }})">
                 <div class="catlist__name">{{ cat.name_html|safe|default:cat.name }}</div>
             </div>
         {% endfor %}
@@ -37,25 +34,21 @@
         </div>
     </div>
     
-    <div id="view_category" style="display:none">
+    <div id="view_category" style="display: none">
         <div class="recycle__subheader-category">
-            <div class="recycle__back j-back" onclick="view_index()"></div>
-            <div class="recycle__subheader-category__title"></div>
         </div>
         <div class="firmlist"></div>
     </div>
 
-    <div id="view_firm" style="display:block">
+    <div id="view_firm" style="display: none">
         <div class="recycle__subheader-category">
-            <div class="recycle__back j-back" onclick="view_category()"></div>
-            <div class="recycle__subheader-category__title"></div>
         </div>
-        <div class="firmcard">
+        {% comment %} <div class="firmcard">
             <div class="firmcard__head">
                 <div class="firmcard__title">Галерея Виктора Бронштейна</div>
                 <div class="firmcard__address">Иркутск, 3-го июля, 25</div>
-            </div>
-            <div class="firmcard__photo"></div>
+            </div> //
+            <div class="firmcard__photo"></div> //
             <div class="firmcard__body">
                 <div class="firmcard__hours">пн-пт 19:00 — 23</div>
                 <div class="firmcard__phone">+7 950 089-15-17</div>
@@ -72,7 +65,7 @@
                 </ul>
                 {% endspaceless %}
             </div>
-        </div>
+        </div> {% endcomment %}
         <div class="recycle__socfooter">
             <div>
                 {% spaceless %}
@@ -124,7 +117,7 @@
     <script>
         var dots = {{ dots_json|safe }};
         var categories = {{ categories_json|safe }};
-        var div_list, myMap, last_cat;
+        var div_list, myMap, last_cat = 0;
         $(function(){
             ymaps.ready(init);
         });
