@@ -8,5 +8,5 @@ from . import views, admin_views
 
 urlpatterns = [
     url(r'^$', views.index, name = "index"),
-    url(r'^get_cat/$', admin_views.get_cat, name = "get_cat"), 
+    url(r'^get_cat/$', admin_views.get_cat, name = "get_cat"),
 ]

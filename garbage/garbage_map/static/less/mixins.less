@@ -33,3 +33,9 @@
     opacity: @opacity / 100;
     filter: e(%("alpha(opacity=%d)", @opacity));
 }
+
+.vertical-align-center(@position: relative) {
+    position: @position;
+    top: 50%;
+    transform: translateY(-50%);
+}
