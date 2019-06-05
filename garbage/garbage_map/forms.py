@@ -7,8 +7,8 @@ class DotForm(forms.ModelForm):
         model = Dot
         fields = '__all__'
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'ООО Ромашка'}),
-            'addres': forms.TextInput(attrs={'placeholder': 'Адрес'})
+            'name': forms.TextInput(attrs={'placeholder': 'Название компании'}),
+            'addres': forms.TextInput(attrs={'placeholder': 'Адрес'}),
         }
 class CatForm(forms.ModelForm):
     class Meta:

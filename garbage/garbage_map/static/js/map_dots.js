@@ -14,11 +14,17 @@ function view_index() // Отображаем все категории мусо
     $('#view_index').show();
     $('#view_category').hide();
     $('#view_firm').hide();
-  
+    $('.recycle__subheader-category').empty();
+    $('.recycle__subheader-category').append(   
+        '<div class="recycle__search" onclick="view_category(-2)"></div>' + 
+        '<div class="recycle__subheader-category__title">Выберете категорию</div>'
+    );
+    set_center(52.287054, 104.281047, 13);
     show_dots(-1, true);
 }
 function view_category(cat_id) //Отображаем весь список точек приема мусора в сайдбаре
 { 
+    var firms_list;
     $('#view_index').hide();
     $('#view_firm').hide();
     $('#view_category').show();
@@ -29,37 +35,69 @@ function view_category(cat_id) //Отображаем весь список то
 
     $('.recycle__subheader-category').empty();
     $('.recycle__subheader-category').append(   
-        '<div class="recycle__back j-back" onclick="view_index()"></div>' +
-        '<div class="recycle__subheader-category__title">' + get_category([cat_id]) + '</div>'
-    ); 
+        '<div class="recycle__back j-back" onclick="view_index()"></div>'
+    );
 
 
-    show_dots(cat_id, false);
     set_center(52.287054, 104.281047, 13);
-    var firms_list = $.grep(dots, function(n, i){
-        return n.categories.includes(cat_id);
-    });
+    if (cat_id != -2)
+    {
+        show_dots(cat_id, false);
+        firms_list = $.grep(dots, function(n, i){
+            return n.categories.includes(cat_id);
+        });
+        $('.recycle__subheader-category').append(   
+            '<div class="recycle__subheader-category__title">' + get_category([cat_id]) + '</div>'
+        ); 
+    }
+    else
+    {
+        show_dots(cat_id, true);
+        firms_list = dots;
+        $('.recycle__subheader-category').append(   
+            '<div class="recycle__subheader-category__title"> <input id="search-field" type="text" title="Введите название фирмы или улицу" placeholder="Поиск..."></div>'
+        ); 
+    }
     for (var i = 0; i < firms_list.length; i++)
     {
         $('.firmlist').append( 
-            '<div class="firmlist__item" onClick="view_firm(' + firms_list[i].id + ')"> </div>'
+            '<div class="firmlist__item" onClick="view_firm(' + firms_list[i].id + ', false)"> </div>'
         );
         $('.firmlist__item:last').append(   
             '<div class="firmlist__title">' + firms_list[i].name + '</div>' +
             '<div class="firmlist__hours">' + firms_list[i].working_hours + '</div>' + 
             '<div class="firmlist__address">' + firms_list[i].addres + '</div>'
         );
-    } 
+    }
+    
+    $('input[id=search-field]').keyup(function() {
+        var search_text =  $(this).val();
+        $('#view_category .firmlist__item').remove();
+        for (var i = 0; i < firms_list.length; i++)
+        {
+            var name = firms_list[i].name.toLowerCase(), addr = firms_list[i].addres.toLowerCase();
+            if (name.indexOf(search_text.toLowerCase()) != -1 || addr.indexOf(search_text.toLowerCase()) != -1)
+            {
+                $('.firmlist').append( 
+                    '<div class="firmlist__item" onClick="view_firm(' + firms_list[i].id + ', false)"> </div>'
+                );
+                $('.firmlist__item:last').append(   
+                    '<div class="firmlist__title">' + firms_list[i].name + '</div>' +
+                    '<div class="firmlist__hours">' + firms_list[i].working_hours + '</div>' + 
+                    '<div class="firmlist__address">' + firms_list[i].addres + '</div>'
+                );
+            }
+        }
+    }); 
 }
 
 
-function view_firm(firm_id) //Информация о выбранной точке
+function view_firm(firm_id, ar_back) //Информация о выбранной точке
 {
     $('.firmcard').remove();
     $('#view_index').hide();
     $('#view_category').hide();
     $('#view_firm').show(); 
-    
     var chs_firm = $.grep(dots, function(n, i){
         return n.id === firm_id;
     });
@@ -79,7 +117,7 @@ function view_firm(firm_id) //Информация о выбранной точ�
     $('.firmcard').append(
         '<div class="firmcard__body">' +
             '<div class="firmcard__hours">' + chs_firm[0].working_hours + '</div>' +
-            '<div class="firmcard__phone">+7 950 089-15-17</div>' +
+            '<div class="firmcard__phone">' + chs_firm[0].phone + '</div>' +
             '<div class="firmcard__desc">' + chs_firm[0].description + '</div>' +
         '</div>'
     );
@@ -91,9 +129,20 @@ function view_firm(firm_id) //Информация о выбранной точ�
     );
    
     $('.recycle__subheader-category').empty();
-    $('.recycle__subheader-category').append('<div class="recycle__back j-back" onclick="view_category(last_cat)"></div>' +
-                                            '<div class="recycle__subheader-category__title"></div>'
-                                            );
+    if (ar_back)
+    {
+        $('.recycle__subheader-category').append(   
+            '<div class="recycle__back j-back" onclick="view_index()"></div>'+
+            '<div class="recycle__subheader-category__title"></div>'
+        );    
+    }
+    else
+    {
+        $('.recycle__subheader-category').append(
+            '<div class="recycle__back j-back" onclick="view_category(last_cat)"></div>' +
+            '<div class="recycle__subheader-category__title"></div>'
+        );
+    }
  
 
     for (var i = 0; i < chs_firm[0].categories.length; i++)
@@ -112,12 +161,9 @@ function show_dots(category_filter, check)
             myMap.geoObjects           
                 .add(new ymaps.Placemark([dots[i].x, dots[i].y], {
                     balloonContentHeader: 
-                        '<a href = "#">' + dots[i].name + '</a><br>' +
-                        '<span class="description">' + dots[i].description + '</span>' + 
-                        '<p>Здесь принимают ' + get_category(dots[i].categories) + ' </p>',
+                        '<p class="bord" onClick="view_firm(' + dots[i].id + ', true)" style="cursor: pointer;">' + dots[i].name + '</p>',
                     balloonContentBody: 
-                        '<img src="' + dots[i].image + '" height="150" width="200"> <br/> ' +
-                        '<p>' + dots[i].working_hours + '</p>',
+                        '<p class="bord-ad">' + dots[i].addres + '</p>',
                     hintContent: 
                         dots[i].name
                 })); 

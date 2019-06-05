@@ -5,15 +5,15 @@
 {% if request.path == '/admin/garbage_map/category/' %} 
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         var less = {
             javascriptEnabled: true
         };
     </script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function(){
             if (window.location.pathname == '/admin/garbage_map/category/')
@@ -40,7 +40,7 @@
                         connectWith: "div"
                     });
                     $('.catlist').disableSelection();
-                    $('.catlist').append('<input type="button" id="save_order" value="Сохранить порядок" name="_anotherbutton" style="margin: 0px 0px 0px 25px; padding: 5px 10px 5px 10px;"/>');
+                    $('.catlist').append('<input type="button" id="save_order" value="Сохранить порядок" name="_anotherbutton" style="margin: 10px 0px 0px 0px; padding: 5px 10px 5px 10px;"/>');
                     $('#save_order').click(function() {
                         var new_order = [];
                         for (var i = 0; i < cats.length; i++)

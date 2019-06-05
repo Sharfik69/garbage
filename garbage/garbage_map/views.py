@@ -19,6 +19,7 @@ def index(request, cat=None):
             'y': dot.y,
             'working_hours': dot.working_hours,
             'addres': dot.addres,
+            'phone': dot.phone,
             'image': '',
             'categories': [id[0] for id in dot.categories.values_list('id')],
         }

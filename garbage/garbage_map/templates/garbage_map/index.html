@@ -16,7 +16,14 @@
         </a>
     </div>
     <div id="view_index">
-        <div class="recycle__subheader recycle__subheader_index">Выберите категорию</div>
+        {% comment %} <div class="recycle__subheader recycle__subheader_index"> {% endcomment %}
+        
+            <div class="recycle__subheader-index">
+                <div class="recycle__subheader-index__title">Выберете категорию</div>
+                <div class="recycle__search" onClick="view_category(-2)"> </div>
+            </div>
+        
+        {% comment %} </div> {% endcomment %}
 
         {% spaceless %}
         <div class="catlist" id = "slist_garbage">
@@ -43,29 +50,6 @@
     <div id="view_firm" style="display: none">
         <div class="recycle__subheader-category">
         </div>
-        {% comment %} <div class="firmcard">
-            <div class="firmcard__head">
-                <div class="firmcard__title">Галерея Виктора Бронштейна</div>
-                <div class="firmcard__address">Иркутск, 3-го июля, 25</div>
-            </div> //
-            <div class="firmcard__photo"></div> //
-            <div class="firmcard__body">
-                <div class="firmcard__hours">пн-пт 19:00 — 23</div>
-                <div class="firmcard__phone">+7 950 089-15-17</div>
-                <div class="firmcard__desc">Прием по предварительному звонку</div>
-            </div>
-
-            <div class="firmcard__also also">
-                <span class="also__label">Также принимается</span>
-                {% spaceless %}
-                <ul class="also__list">
-                    <li>стекло</li>
-                    <li>металл</li>
-                    <li>макулатура</li>
-                </ul>
-                {% endspaceless %}
-            </div>
-        </div> {% endcomment %}
         <div class="recycle__socfooter">
             <div>
                 {% spaceless %}
