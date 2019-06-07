@@ -5,15 +5,10 @@
 {% if request.path == '/admin/garbage_map/category/' %} 
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet/less" type="text/css" href="{% static 'less/recycle.less' %}" />
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        var less = {
-            javascriptEnabled: true
-        };
-    </script>
+    
     <script>
         $(function(){
             if (window.location.pathname == '/admin/garbage_map/category/')
@@ -24,8 +19,8 @@
                 $.get(CATEGORIES_URL).done(function(cats){
                     $('#content-main').append('<h2> Порядок отображения категорий </h2>');
                     $('#content-main').append(
-                        '<div class="catlist" id = "slist_garbage">' +  
-                        '</div>'
+                        '<div class="catblock" style = "width: 20%;"><div class="catlist" id = "slist_garbage">' +  
+                        '</div> </div>'
                     );
                     for (var i = 0; i < cats.length; i++)
                     {
@@ -40,7 +35,7 @@
                         connectWith: "div"
                     });
                     $('.catlist').disableSelection();
-                    $('.catlist').append('<input type="button" id="save_order" value="Сохранить порядок" name="_anotherbutton" style="margin: 10px 0px 0px 0px; padding: 5px 10px 5px 10px;"/>');
+                    $('.catblock').append('<input type="button" id="save_order" value="Сохранить порядок" name="_anotherbutton" style="margin: 10px 0px 0px 0px; padding: 5px 10px 5px 10px;"/>');
                     $('#save_order').click(function() {
                         var new_order = [];
                         for (var i = 0; i < cats.length; i++)
@@ -54,6 +49,7 @@
                         }
                         new_order = JSON.stringify(new_order);
                         $.get(SAVE_ORDER_URL, {'new_order': new_order});
+                        
                     });
                 }); 
             }
@@ -62,4 +58,15 @@
 
 
 {% endif %}
+{% endblock %}
+
+{% block footer %}
+    {% if request.path == '/admin/garbage_map/category/' %} 
+        <script>
+            var less = {
+                javascriptEnabled: true
+            };
+        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+    {% endif %}
 {% endblock %}

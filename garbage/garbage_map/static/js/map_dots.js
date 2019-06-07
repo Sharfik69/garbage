@@ -3,7 +3,15 @@ function init()
     myMap = new ymaps.Map("map", {
         center: [52.287054, 104.281047],
         zoom: 13,
-        controls: ['zoomControl']
+        controls: []
+    });
+    myMap.controls.add('zoomControl', {
+        size: 'small',
+        float: 'none',
+        position: {
+            top: '50px',
+            right: '30px'
+        }
     });
     show_dots(-1, true);
     view_index();
@@ -71,7 +79,8 @@ function view_category(cat_id) //Отображаем весь список то
     }
     
     $('input[id=search-field]').keyup(function() {
-        var search_text =  $(this).val();
+        var search_text =  $(this).val(),
+            regex = new RegExp('[ ,.]');
         $('#view_category .firmlist__item').remove();
         for (var i = 0; i < firms_list.length; i++)
         {
@@ -86,7 +95,7 @@ function view_category(cat_id) //Отображаем весь список то
                     '<div class="firmlist__hours">' + firms_list[i].working_hours + '</div>' + 
                     '<div class="firmlist__address">' + firms_list[i].addres + '</div>'
                 );
-            }
+            }    
         }
     }); 
 }
@@ -111,7 +120,7 @@ function view_firm(firm_id, ar_back) //Информация о выбранно�
     );
     $('.firmcard').append(
         '<div class="firmcard__photo">' +
-           
+           '<img src="' + chs_firm[0].image + '"/>' + 
         '</div>'
     );
     $('.firmcard').append(
@@ -161,11 +170,12 @@ function show_dots(category_filter, check)
             myMap.geoObjects           
                 .add(new ymaps.Placemark([dots[i].x, dots[i].y], {
                     balloonContentHeader: 
-                        '<p class="bord" onClick="view_firm(' + dots[i].id + ', true)" style="cursor: pointer;">' + dots[i].name + '</p>',
+                        '<p class="map__card_title" onClick="view_firm(' + dots[i].id + ', true)">' + dots[i].name + '</p>',
                     balloonContentBody: 
-                        '<p class="bord-ad">' + dots[i].addres + '</p>',
+                        '<p class="map__card_address">' + dots[i].addres + '</p>',
                     hintContent: 
-                        dots[i].name
+                        dots[i].name,
+                    iconCaption: dots[i].name
                 })); 
         }
     }
