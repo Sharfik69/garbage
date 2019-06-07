@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="{% static 'js/map_dots.js' %}"></script>
-    <style type="text/css">                                                                                                                         
-    </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
         
     <div class="recycle container-fluid">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-white sidebar px-0" style="max-height: 100vh; overflow-y: auto;box-shadow: 0 0 80px 1px rgba(0,0,0,0.4); z-index: 1;">
+            <nav class="col-md-2 d-none d-md-block bg-white sidebar px-0 navbar">
                 <div class="sidebar-sticky">  
                     {% block sidebar %}
                     {% endblock sidebar %}
