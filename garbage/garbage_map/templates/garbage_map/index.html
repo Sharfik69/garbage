@@ -16,15 +16,12 @@
         </a>
     </div>
     <div id="view_index">
-        {% comment %} <div class="recycle__subheader recycle__subheader_index"> {% endcomment %}
         
             <div class="recycle__subheader-index">
                 <div class="recycle__subheader-index__title">Выберете категорию</div>
                 <div class="recycle__search" onClick="view_category(-2)"> </div>
             </div>
         
-        {% comment %} </div> {% endcomment %}
-
         {% spaceless %}
         <div class="catlist" id = "slist_garbage">
         {% for cat in categories %} 

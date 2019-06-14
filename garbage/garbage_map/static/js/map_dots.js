@@ -80,7 +80,7 @@ function view_category(cat_id) //Отображаем весь список то
     
     $('input[id=search-field]').keyup(function() {
         var search_text =  $(this).val(),
-            regex = new RegExp('[ ,.]');
+            regex = new RegExp('');
         $('#view_category .firmlist__item').remove();
         for (var i = 0; i < firms_list.length; i++)
         {
@@ -125,8 +125,8 @@ function view_firm(firm_id, ar_back) //Информация о выбранно�
     );
     $('.firmcard').append(
         '<div class="firmcard__body">' +
-            '<div class="firmcard__hours">' + chs_firm[0].working_hours + '</div>' +
-            '<div class="firmcard__phone">' + chs_firm[0].phone + '</div>' +
+            '<div class="firmcard__hours"><strong> Время работы: </strong> <br>' + chs_firm[0].working_hours + '</div>' +
+            '<div class="firmcard__phone"><strong> Контактный телефон: </strong> <br>' + chs_firm[0].phone + '</div>' +
             '<div class="firmcard__desc">' + chs_firm[0].description + '</div>' +
         '</div>'
     );
@@ -138,12 +138,14 @@ function view_firm(firm_id, ar_back) //Информация о выбранно�
     );
    
     $('.recycle__subheader-category').empty();
+    
     if (ar_back)
     {
         $('.recycle__subheader-category').append(   
             '<div class="recycle__back j-back" onclick="view_index()"></div>'+
             '<div class="recycle__subheader-category__title"></div>'
         );    
+        
     }
     else
     {
@@ -151,6 +153,9 @@ function view_firm(firm_id, ar_back) //Информация о выбранно�
             '<div class="recycle__back j-back" onclick="view_category(last_cat)"></div>' +
             '<div class="recycle__subheader-category__title"></div>'
         );
+        $('.recycle__subheader-category').append(   
+            '<div class="recycle__subheader-category__title">' + get_category([last_cat]) + '</div>'
+        ); 
     }
  
 
@@ -174,7 +179,7 @@ function show_dots(category_filter, check)
                     balloonContentBody: 
                         '<p class="map__card_address">' + dots[i].addres + '</p>',
                     hintContent: 
-                        dots[i].name,
+                        dots[i].addres,
                     iconCaption: dots[i].name
                 })); 
         }
